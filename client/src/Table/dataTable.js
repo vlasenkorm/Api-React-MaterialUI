@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -46,8 +46,6 @@ const handleOpen = () => {
 const handleClose = () => {
   setOpen(false);
 };
-
-  console.log('props', props)
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="customized table">
