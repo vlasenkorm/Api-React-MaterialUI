@@ -6,48 +6,32 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
-import Modal from '@material-ui/core/Modal';
+import Modal from './modal';
 import {StyledTableCell, StyledTableRow, useStyles} from '../Style/table'
 
-
-function getModalStyle() {
-  const top = 50
-  const left = 50 
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
-
-
+const body = (
+  <div>
+    <h2 id="simple-modal-title">Text in a modal</h2>
+    <p id="simple-modal-description">
+      Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+    </p>
+  </div>
+);
 
 export default function CustomizedTables(props) {
   const classes = useStyles();
-  const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
-
-
-  const body = (
-    <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Text in a modal</h2>
-      <p id="simple-modal-description">
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-      </p>
-    </div>
-  );
 
 const handleOpen = () => {
   setOpen(true);
   
 };
-
-const handleClose = () => {
-  setOpen(false);
-};
   return (
     <TableContainer component={Paper}>
+      <Modal
+        open={open}
+        body={body}
+      />
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -74,6 +58,7 @@ const handleClose = () => {
               {row.flightCode} - {row.flightProvider}
               </StyledTableCell>
               <StyledTableCell align="right">
+                <button onClick={() => props.deleteRow(row.id)}>Delete</button>
                 <Link href="#" onClick={handleOpen}>
                   {'More details =>'}
                 </Link>
@@ -82,14 +67,6 @@ const handleClose = () => {
           ))}
         </TableBody>
       </Table>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        {body}
-      </Modal>
     </TableContainer>
   );
 }
